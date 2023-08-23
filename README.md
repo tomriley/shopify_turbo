@@ -68,3 +68,17 @@ The application layout should look something like:
   </body>
 </html>
 ```
+
+
+Helpers
+-------
+
+```erb
+<%= 
+  shopify_app_titlebar(
+    title: @page_title,
+    primary: {label: "Do Something", destination: "/somewhere"},
+    secondary: []
+  )
+%>
+```
