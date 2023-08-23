@@ -11,6 +11,10 @@ module ShopifyTurbo
 
     def embedded_always_renders_shell
       if params[:embedded] == "1"
+        #if respond_to?(:before_render_shell)
+          before_render_shell
+        #end
+
         if scopes_mismatch?
           fullpage_redirect_to("/login?shop=#{current_shopify_domain}")
           return

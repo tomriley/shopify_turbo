@@ -39,6 +39,9 @@ class ApplicationController < ActionController::Base
   include ShopifyApp::EmbeddedApp
   include ShopifyTurbo::ShellRenderer
   include ShopifyTurbo::Authenticated
+
+  def before_render_shell
+  end
 end
 ```
 

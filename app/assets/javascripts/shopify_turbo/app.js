@@ -1,6 +1,6 @@
 import { createApp } from '@shopify/app-bridge';
 
-if (!window.app) {
+if (window.app == undefined) {
   var data = document.getElementById('shopify_app_init').dataset;
   
   window.app = createApp({

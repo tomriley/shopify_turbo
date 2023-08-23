@@ -29,16 +29,14 @@ document.addEventListener('turbo:load', (event) => {
 document.addEventListener('turbo:load', (event) => {
   let url = new URL(event.detail.url);
   var matched = false;
-  console.log("turbo:load", url.pathname);
+  
   for (let item of config.menuItems) {
     if (url.pathname.startsWith(item.destination)) {
-      console.log(""+ item.destination + " matches");
-      //navigationMenu.set({active: item.link});
+      // navigationMenu.set({active: item.link});
       matched = true;
     }
   }
   if (!matched) {
-    console.log("no destination match, assuming route");
     //navigationMenu.set({active: undefined});
     let goto = new URLSearchParams(url.search).get("_goto");
     if (goto) {

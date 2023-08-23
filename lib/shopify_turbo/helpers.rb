@@ -12,5 +12,15 @@ module ShopifyTurbo
         })
       end
     end
+
+    def shopify_app_titlebar(title: nil, primary: nil, secondary: [])
+      content_tag(:div, "", id: "shopify_app_titlebar", class: "hidden", data: {
+        title: title,
+        buttons: {
+          primary: primary,
+          secondary: secondary
+        }
+      })
+    end
   end
 end
