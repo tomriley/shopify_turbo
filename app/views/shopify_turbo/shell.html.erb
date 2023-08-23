@@ -1,0 +1,12 @@
+<%= content_tag(:div, nil, id: "shopify_app_init", data: {
+  api_key: ShopifyApp.configuration.api_key,
+  shop_origin: @shop_origin || (@current_shopify_session.shop if @current_shopify_session),
+  host: @host,
+  debug: Rails.env.development?,
+  immediately_visit: @immediately_visit
+} ) %>
+
+<%= javascript_tag nonce: true, type: :module do %>
+  console.log('booting shopify_turbo app...');
+  import "shopify_turbo/boot";
+<% end %>

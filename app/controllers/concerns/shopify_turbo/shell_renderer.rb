@@ -19,7 +19,7 @@ module ShopifyTurbo
         @shop_origin = current_shopify_domain
         @host = params[:host]
         @immediately_visit = request.path
-        render template: "application/shell", layout: "embedded_app"
+        render template: "shopify_turbo/shell"
       end
     end
 
