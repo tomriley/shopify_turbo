@@ -22,5 +22,10 @@ module ShopifyTurbo
         }
       })
     end
+
+    # Returns true if this is an initial browser request rendering the bootstrap shell.
+    def rendering_shell?
+      params[:embedded] == "1"
+    end
   end
 end

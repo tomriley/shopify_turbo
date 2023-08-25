@@ -37,8 +37,8 @@ ApplicationController should look like:
 ```ruby
 class ApplicationController < ActionController::Base
   include ShopifyApp::EmbeddedApp
-  include ShopifyTurbo::ShellRenderer
-  include ShopifyTurbo::Authenticated
+  include ShopifyTurbo::ShellRenderer # intercepts intial page view to render bootstrap page
+  include ShopifyTurbo::Authenticated # authenticates subsequent requests (using auth header)
 
   def before_render_shell
   end
