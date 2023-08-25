@@ -6,6 +6,8 @@
   immediately_visit: @immediately_visit
 } ) %>
 
+<%= render "layouts/shopify_turbo/splash" %>
+
 <%= javascript_tag nonce: true, type: :module do %>
   console.log('booting shopify_turbo app...');
   import "shopify_turbo/boot";
