@@ -11,9 +11,7 @@ module ShopifyTurbo
 
     def embedded_always_renders_shell
       if params[:embedded] == "1"
-        #if respond_to?(:before_render_shell)
-          before_render_shell
-        #end
+        before_render_shell
 
         if scopes_mismatch?
           fullpage_redirect_to("/login?shop=#{current_shopify_domain}")
@@ -22,7 +20,15 @@ module ShopifyTurbo
 
         @shop_origin = current_shopify_domain
         @host = params[:host]
-        @immediately_visit = request.path
+
+        @immediately_visit = request.original_fullpath
+        # strip out embededed param
+        %w[embedded hmac shop timestamp signature locale session appLoadId code].each do |param|
+          @immediately_visit.gsub!(/&?#{param}=[^&]*/, "")
+        end
+
+        logger.info "@immediately_visit set to #{@immediately_visit}"
+
         render template: "shopify_turbo/shell"
       end
     end
