@@ -1,6 +1,5 @@
 import { Turbo } from "@hotwired/turbo-rails";
 import { TitleBar, Button } from '@shopify/app-bridge/actions';
-import config from "shopify_config/navigation";
 import app from "shopify_turbo/app";
 
 if (window.shopifyTitleBar == undefined) {
