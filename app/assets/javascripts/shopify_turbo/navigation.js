@@ -21,8 +21,9 @@ app.subscribe(Redirect.Action.APP, function(redirectData) {
 
 document.addEventListener('turbo:load', (event) => {
   let url = new URL(event.detail.url);
+  let query = url.pathname + url.search;
   const history = History.create(app);
-  history.dispatch(History.Action.REPLACE, url.pathname);
+  history.dispatch(History.Action.REPLACE, query);
 });
 
 // every turbo page visit, check if we should activate a link
