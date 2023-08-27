@@ -8,19 +8,13 @@ module ShopifyTurbo
       include ShopifyTurbo::CookielessFlashes
     end
 
-    def current_shopify_session
-      auth_header = request.headers["HTTP_AUTHORIZATION"]
-      if auth_header.present? && !auth_header.match(/^Bearer (.+)$/)
-        request.headers.delete("HTTP_AUTHORIZATION")
-      end
-      super
-    end
-
     # ugggh. if login protections redirects (renders) the redirection page, it includes js that
     # tells the appbridge to redirect the main browser window to auth. the appbridge needs this
-    # myserious "host" parameter that we receive in the original iframe requrest, so the frontend
+    # myserious "host" parameter that we receive in the original iframe request, so the frontend
     # has to pass it to each backend request. we use a request header for this, and shove it into
     # the params hash at the start of each authenticated request.
+    #
+    # it's quite possible there is a simpler solution for this
     def set_host_param
       host = request.headers["X-Shopify-App-Host"]
       if host.present?
