@@ -8,6 +8,14 @@ module ShopifyTurbo
       include ShopifyTurbo::CookielessFlashes
     end
 
+    def current_shopify_session
+      auth_header = request.headers["HTTP_AUTHORIZATION"]
+      if auth_header.present? && !auth_header.match(/^Bearer (.+)$/)
+        request.headers.delete("HTTP_AUTHORIZATION")
+      end
+      super
+    end
+
     # ugggh. if login protections redirects (renders) the redirection page, it includes js that
     # tells the appbridge to redirect the main browser window to auth. the appbridge needs this
     # myserious "host" parameter that we receive in the original iframe requrest, so the frontend
