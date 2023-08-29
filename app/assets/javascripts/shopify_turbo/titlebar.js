@@ -22,7 +22,9 @@ function createButton(item) {
 
 document.addEventListener('turbo:load', (event) => {
   // get the current page title
-  var data = document.getElementById('shopify_app_titlebar')?.dataset || {};
+  var elm = document.getElementById('shopify_app_titlebar');
+  if (!elm) return;
+  var data = elm.dataset || {};
   var button = JSON.parse(data.buttons || "{}");
   var primary = button.primary ? createButton(button.primary) : null;
   var secondary = (button.secondary || []).map(createButton);

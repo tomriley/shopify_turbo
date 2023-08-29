@@ -29,6 +29,7 @@ module ShopifyTurbo
         end
         def self.current_session_id(auth_header, cookies, online)
           if auth_header && !auth_header.match(/^Bearer (.+)$/)
+            Rails.logger.info "(shopify_turbo.patch-shopify_api-gem) auth_header was #{auth_header}, setting it to nil"
             auth_header = nil
           end
           old_current_session_id(auth_header, cookies, online)
