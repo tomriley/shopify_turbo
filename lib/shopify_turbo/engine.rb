@@ -21,21 +21,21 @@ module ShopifyTurbo
       end
     end
 
-    initializer "shopify_turbo.patch-shopify_api-gem" do
-      ShopifyAPI::Utils::SessionUtils.class_eval do
-        puts "PATCHING ShopifyAPI::Utils::SessionUtils.current_session_id"
-        class << self
-          alias_method :old_current_session_id, :current_session_id
-        end
-        def self.current_session_id(auth_header, cookies, online)
-          if auth_header && !auth_header.match(/^Bearer (.+)$/)
-            Rails.logger.info "(shopify_turbo.patch-shopify_api-gem) auth_header was #{auth_header}, setting it to nil"
-            auth_header = nil
-          end
-          old_current_session_id(auth_header, cookies, online)
-        end
-      end
-    end
+    # initializer "shopify_turbo.patch-shopify_api-gem" do
+    #   # FIXME: submit patch for this
+    #   ShopifyAPI::Utils::SessionUtils.class_eval do
+    #     class << self
+    #       alias_method :old_current_session_id, :current_session_id
+    #     end
+    #     def self.current_session_id(auth_header, cookies, online)
+    #       if auth_header && !auth_header.match(/^Bearer (.+)$/)
+    #         Rails.logger.info "(shopify_turbo.patch-shopify_api-gem) auth_header was #{auth_header}, setting it to nil"
+    #         auth_header = nil
+    #       end
+    #       old_current_session_id(auth_header, cookies, online)
+    #     end
+    #   end
+    # end
 
     initializer "shopify_turbo.importmap", before: "importmap" do |app|
       app.config.importmap.paths << Engine.root.join("config/importmap.rb")
