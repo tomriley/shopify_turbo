@@ -35,6 +35,8 @@ document.addEventListener("turbo:before-fetch-request", async (event) => {
   const token = await getSessionToken(app);
   event.detail.fetchOptions.headers["Authorization"] = `Bearer ${token}`;
   // The original "host" parameter is needed for possible redirect to reauth to work
-  event.detail.fetchOptions.headers["X-Shopify-App-Host"] = window.appHost;
+  // event.detail.fetchOptions.headers["X-Shopify-App-Host"] = window.appHost;
   event.detail.resume();
 });
+
+

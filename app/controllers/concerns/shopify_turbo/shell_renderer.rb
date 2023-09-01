@@ -20,17 +20,21 @@ module ShopifyTurbo
 
         @shop_origin = current_shopify_domain
         @host = params[:host]
-
         @immediately_visit = request.original_fullpath
-        # strip out embededed param
-        %w[embedded hmac shop timestamp signature locale session appLoadId code].each do |param|
+        %w[embedded hmac timestamp signature locale session appLoadId code].each do |param|
           @immediately_visit.gsub!(/&?#{param}=[^&]*/, "")
         end
 
-        logger.info "@immediately_visit set to #{@immediately_visit}"
+        logger.debug "[shopify_turbo] will immediately visit #{@immediately_visit}"
 
-        render template: "shopify_turbo/shell"
+        render template: "shopify_turbo/shell", layout: layout_for_shell
       end
+    end
+
+    protected
+
+    def layout_for_shell
+      "embedded_app"
     end
 
     private
