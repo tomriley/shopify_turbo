@@ -15,9 +15,34 @@ var navigationMenu = NavigationMenu.create(app, {
   items: config.menuItems.map((item) => item.link),
 });
 
-app.subscribe(Redirect.Action.APP, function(redirectData) {
-  Turbo.visit(redirectData.path);
-});
+
+import debounce from 'debounce'
+
+function appRedirectHandler(payload) {
+  const shopifyAppInit = document.getElementById('shopify_app_init')
+  const shop = shopifyAppInit.dataset.shopOrigin
+  const host = shopifyAppInit.dataset.host
+  let path = payload.path
+
+  if (path === '/' || path.startsWith('/?appLoadId=')) {
+    path = shopifyAppInit.dataset.immediatelyVisit
+  }
+
+  console.log(payload)
+
+  const url = new URL(location.origin + path)
+  url.searchParams.set('shop', shop)
+  url.searchParams.set('host', host)
+
+  console.log('[shopify_app] Redirecting to:', url.toString())
+  Turbo.visit(url)
+}
+
+app.subscribe(Redirect.Action.APP, debounce(appRedirectHandler, 200));
+
+//app.subscribe(Redirect.Action.APP, function(redirectData) {
+  //Turbo.visit(redirectData.path);
+//});
 
 document.addEventListener('turbo:load', (event) => {
   let url = new URL(event.detail.url);

@@ -3,7 +3,8 @@ module ShopifyTurbo
     extend ActiveSupport::Concern
 
     included do
-      before_action :set_host_param
+      before_action :set_host_param # replace with middleware
+      before_action :set_host
       include ShopifyApp::EnsureHasSession
       include ShopifyTurbo::CookielessFlashes
       before_action :set_shop_param # after auth
@@ -40,6 +41,10 @@ module ShopifyTurbo
       # if host.present?
       #   params[:host] = host
       # end
+    end
+
+    def set_host
+      @host = params[:host]
     end
 
     def set_shop_param
